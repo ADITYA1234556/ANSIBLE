@@ -6,6 +6,6 @@ pvtsub1id: subnet-02ff4f811aa49ecd0
 pvtsub2id: subnet-0f320f89efbdd877a
 pvtsub3id: subnet-0fbef7ae1398115d3
 igwid: igw-0e832ef6898b1d175
-natgwid: nat-01180034965e1cd1a
+natgwid: nat-0cbf32a8d0c5ec130
 pubrtid: rtb-02e2ddd34a16af2a7
 pvtrtid: rtb-0f8f72e678ad46cf1
