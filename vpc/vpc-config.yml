@@ -17,4 +17,4 @@
       register: vpcout
 
     - debug:
-        vars: vpcout
+        var: vpcout
