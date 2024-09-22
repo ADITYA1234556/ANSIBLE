@@ -59,6 +59,7 @@
         name: "bastion-host"
         region: "{{region}}"
         instance_type: t2.micro
+        vpc_subnet_id: "{{pubsub1id}}"
         key_name: "{{keypair}}"
         image_id: "{{ami_id}}"
         wait: true
