@@ -184,3 +184,17 @@
         - vpcigw.gateway_id
         - public_route_table.route_table.id
         - private_route_table.route_table.id
+
+    - set_fact:
+        vpcid: "{{vpcout.vpc.id}}"
+        pubsub1id: "{{pubsub1.subnet.id}}"
+        pubsub2id: "{{pubsub2.subnet.id}}"
+        pubsub3id: "{{pubsub3.subnet.id}}"
+        pvtsub1id: "{{pvtsub1.subnet.id}}"
+        pvtsub2id: "{{pvtsub2.subnet.id}}"
+        pvtsub3id: "{{pvtsub3.subnet.id}}"
+        igwid: "{{vpcigw.gateway_id}}"
+        natgwid: "{{nat_gateway.nat_gateway_id}}"
+        pubrtid: "{{public_route_table.route_table.id}}"
+        pvtrtid: "{{private_route_table.route_table.id}}"
+        cacheable: yes #to save it in cache so that repeating wont take a long time
