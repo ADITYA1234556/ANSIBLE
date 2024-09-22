@@ -169,3 +169,18 @@
 
     - debug:
         var: private_route_table
+
+    - debug:
+        var: "{{item}}"
+      loop:
+        - vpcout.vpc.id
+        - pubsub1.subnet.id
+        - pubsub2.subnet.id
+        - pubsub3.subnet.id
+        - pvtsub1.subnet.id
+        - pvtsub2.subnet.id
+        - pvtsub3.subnet.id
+        - nat_gateway.nat_gateway_id
+        - vpcigw.gateway_id
+        - public_route_table.route_table.id
+        - private_route_table.route_table.id
