@@ -56,9 +56,16 @@
         tags:
           Name: Bastion-host
         exact_count: 1
-        count_tag:
-          Name: Bastion-host #so that only one instance with this tag will be created, avoids repeats
       register: bastionhost
+      when: checkec2.instances | length == 0
+
+    - name: Create EC2 only if not created
+      amazon.aws.ec2_instance_info:
+        filters:
+          "tag:Name": Bastion-host
+          instance-state-name: ["running"]
+        region: "{{region}}"
+      register: checkec2
 
     - debug:
         var: "{{item}}"
@@ -66,3 +73,4 @@
         - keypair
         - secgroup
         - bastionhost
+        - checkec2
