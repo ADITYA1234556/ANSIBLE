@@ -28,7 +28,7 @@
         map_public: true
         tags:
           Name: public-subnet-1
-        register: pubsub1
+      register: pubsub1
 
     - name: Create public subnet 2 in zone2
       amazon.aws.ec2_vpc_subnet:
@@ -39,7 +39,7 @@
         map_public: true
         tags:
           Name: public-subnet-2
-        register: pubsub2
+      register: pubsub2
 
     - name: Create public subnet 3 in zone3
       amazon.aws.ec2_vpc_subnet:
@@ -50,4 +50,4 @@
         map_public: true
         tags:
           Name: public-subnet-3
-        register: pubsub3
+      register: pubsub3
