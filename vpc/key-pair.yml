@@ -1,0 +1,19 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False #local machine no need to gather facts
+  tasks:
+    - name: create a new EC2 key pair, returns generated private key
+      # use no_log to avoid private key being displayed into output
+      amazon.aws.ec2_key:
+        name: ansible managed keypair
+        region: eu-west-2
+      register: aws_ec2_key_pair
+
+    - debug:
+        var: aws_ec2_key_pair #output the pvt key that was registered
+
+    - name: Store the aws pvt key pair
+      copy:
+        content: "{{aws_ec2_key_pair.key.private_key}}"
+        dest: ./sample-key.pem
+      when: aws_ec2_key_pair.changed
