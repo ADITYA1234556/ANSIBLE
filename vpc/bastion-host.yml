@@ -43,6 +43,9 @@
             cidr_ip: 0.0.0.0/0
       register: secgroup
 
+    - debug:
+        var: secgroup
+
     - name: Create EC2 only if not created
       amazon.aws.ec2_instance_info:
         filters:
@@ -60,7 +63,7 @@
         image_id: "{{ami_id}}"
         wait: true
         wait_timeout: 300
-        group_id: "{{secgroup.group_id}}"
+        security_group: "{{secgroup.group_id}}"
         tags:
           Name: Bastion-host
         exact_count: 1
