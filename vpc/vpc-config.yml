@@ -156,7 +156,6 @@
       amazon.aws.ec2_vpc_route_table:
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
-        state: "{{state}}"
         tags:
           Name: Private route table
         subnets:
