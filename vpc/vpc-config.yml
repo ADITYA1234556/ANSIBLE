@@ -30,6 +30,9 @@
           Name: public-subnet-1
       register: pubsub1
 
+    - debug:
+        var: pubsub1
+
     - name: Create public subnet 2 in zone2
       amazon.aws.ec2_vpc_subnet:
         state: "{{state}}"
@@ -41,6 +44,9 @@
           Name: public-subnet-2
       register: pubsub2
 
+    - debug:
+        var: pubsub2
+
     - name: Create public subnet 3 in zone3
       amazon.aws.ec2_vpc_subnet:
         state: "{{state}}"
@@ -51,3 +57,6 @@
         tags:
           Name: public-subnet-3
       register: pubsub3
+
+    - debug:
+        var: pubsub3
