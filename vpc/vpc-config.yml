@@ -139,3 +139,34 @@
 
     - debug:
         var: public_route_table
+
+    - name: Create a NAT gateway for Private subnets and allocate new EIP if does not exist
+      amazon.aws.ec2_vpc_nat_gateway:
+        state: "{{state}}"
+        region: "{{region}}"
+        subnet_id: "{{pubsub1.subnet.id}}"
+        wait: true
+        if_exist_do_not_create: true
+      register: nat_gateway
+
+    - debug:
+        var: nat_gateway
+
+    - name: associate nat gateway with private subnet
+      amazon.aws.ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        tags:
+          Name: Private route table
+        subnets:
+          - "{{pvtsub1.subnet.id}}"
+          - "{{pvtsub2.subnet.id}}"
+          - "{{pvtsub3.subnet.id}}"
+        routes:
+          - dest: 0.0.0.0/0
+            instance_id: "{{nat_gateway.instance_id}}"
+      register: private_route_table
+
+    - debug:
+        var: private_route_table
