@@ -63,3 +63,48 @@
 
     - debug:
         var: pubsub3
+
+    - name: Create private subnet 1 in zone1
+      amazon.aws.ec2_vpc_subnet:
+        state: "{{state}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{PvtSub1Cidr}}"
+        region: "{{region}}"
+        az: "{{zone1}}"
+        map_public: false
+        tags:
+          Name: private-subnet-1
+      register: pvtsub1
+
+    - debug:
+        var: pvtsub1
+
+    - name: Create private subnet 2 in zone2
+      amazon.aws.ec2_vpc_subnet:
+        state: "{{state}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{PvtSub2Cidr}}"
+        region: "{{region}}"
+        az: "{{zone2}}"
+        map_public: false
+        tags:
+          Name: private-subnet-2
+      register: pvtsub2
+
+    - debug:
+        var: pvtsub2
+
+    - name: Create private subnet 3 in zone3
+      amazon.aws.ec2_vpc_subnet:
+        state: "{{state}}"
+        vpc_id: "{{vpcout.vpc.id}}"
+        cidr: "{{PvtSub3Cidr}}"
+        region: "{{region}}"
+        az: "{{zone3}}"
+        map_public: false
+        tags:
+          Name: private-subnet-3
+      register: pvtsub3
+
+    - debug:
+        var: pvtsub3
