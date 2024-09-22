@@ -1,0 +1,68 @@
+- name: Create a bastion host
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Import VPC setup variables
+      include_vars: variables/bastion-host-variables
+
+    - name: Import VPC setup variables ids
+      include_vars: variables/output_ids
+
+    - name: Create a key-pair
+      amazon.aws.ec2_key:
+        name: ansible-key
+        region: "{{region}}"
+      register: keypair
+
+    - name: Save private key into a file
+      copy:
+        content: "{{keypair.key.private_key}}"
+        dest: "./ansible-key.pem"
+        mode: 0600
+      when: keypair.changed
+
+    - name: Creating security groups for bastion host
+      amazon.aws.ec2_security_group:
+        name: bastion-host-sg
+        description: allow incoming traffic
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 443
+            to_port: 443
+            cidr_ip: 0.0.0.0/0
+      register: secgroup
+
+    - name: Creating EC2 host for bastion host
+      amazon.aws.ec2_instance:
+        name: "bastion-host"
+        region: "{{region}}"
+        instance_type: t2.micro
+        key_name: "{{keypair}}"
+        image_id: "{{ami_id}}"
+        wait: true
+        wait_timeout: 300
+        group_id: "{{secgroup.group_id}}"
+        tags:
+          Name: Bastion-host
+        exact_count: 1
+        count_tag:
+          Name: Bastion-host #so that only one instance with this tag will be created, avoids repeats
+      register: bastionhost
+
+    - debug:
+        var: "{{item}}"
+      loop:
+        - keypair
+        - secgroup
+        - bastionhost
