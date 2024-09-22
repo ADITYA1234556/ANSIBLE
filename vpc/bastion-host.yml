@@ -16,6 +16,9 @@
       register: keypair
       no_log: true
 
+    - debug:
+        var: keypair
+
     - name: Save private key into a file
       copy:
         content: "{{keypair.key.private_key}}"
