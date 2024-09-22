@@ -1,0 +1,22 @@
+vpc_name: "Ansible-vpc"
+
+#VPC_RANGE
+vpcCidr: "172.24.0.0/16"
+
+#Subnets range
+PubSub1Cidr: 172.20.1.0/24
+PubSub2Cidr: 172.20.2.0/24
+PubSub3Cidr: 172.20.3.0/24
+PvtSub1Cidr: 172.20.4.0/24
+PvtSub2Cidr: 172.20.5.0/24
+PvtSub3Cidr: 172.20.6.0/24
+
+#Region
+region: "eu-west-2"
+
+#Zone names
+zone1: "eu-west-2a"
+zone2: "eu-west-2b"
+zone3: "eu-west-2c"
+
+state: present

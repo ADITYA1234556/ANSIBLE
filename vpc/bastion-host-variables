@@ -1,0 +1,5 @@
+#amazon linux 2 ami for bastion host
+ami_id: "ami-04edbbd619fbf2979"
+
+region: "eu-west-2"
+allowed_connection: 0.0.0.0/0
