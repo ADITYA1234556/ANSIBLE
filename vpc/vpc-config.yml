@@ -108,3 +108,30 @@
 
     - debug:
         var: pvtsub3
+
+    - name: Setup internet gateway
+      amazon.aws.ec2_vpc_igw:
+        vpc_id: "{{vpcout.vpc.id}}"
+        state: "{{state}}"
+        region: "{{region}}"
+        tags:
+          Name: Internet gateway for my VPC
+      register: vpcigw
+
+    - debug:
+        var: vpcigw
+
+#    - name: Set up public subnet route table
+#      amazon.aws.ec2_vpc_route_table:
+#        vpc_id: "{{vpcout.vpc.id}}"
+#        state: "{{state}}"
+#        region: "{{region}}"
+#        tags:
+#          Name: Public route table
+#        subnets:
+#          - "{{pubsub1.subnet.id}}"
+#          - "{{pubsub2.subnet.id}}"
+#          - "{{pubsub3.subnet.id}}"
+#        routes:
+#          - dest: 0.0.0.0/0
+#            gateway_id: {{vpcigw.gateway_id}}
