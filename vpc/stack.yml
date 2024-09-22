@@ -1,0 +1,3 @@
+---
+- import_playbook: vpc-config.yml
+- import_playbook: bastion-host.yml
