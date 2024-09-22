@@ -1,0 +1,31 @@
+---
+- name: Setup app stack
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Import VPC setup variables
+      include_vars: variables/vpc-setup-variables
+
+    - name: Import VPC setup variables ids
+      include_vars: variables/output_ids
+
+    - name: Import VPC setup variables ids
+      include_vars: variables/app-stack-vars
+
+    - name: Create a key-pair
+      amazon.aws.ec2_key:
+        name: ansible-key
+        region: "{{region}}"
+      register: keypair
+      no_log: true
+
+    - debug:
+        var: keypair
+
+    - name: Save private key into a file
+      copy:
+        content: "{{keypair.key.private_key}}"
+        dest: "./ansible-key.pem"
+        mode: 0600
+      when: keypair.changed
