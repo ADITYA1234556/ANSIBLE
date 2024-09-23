@@ -151,10 +151,9 @@
           "tag:Name": "tomcat"
       register: tomcat_instance_info
 
-#    - name: Print tomcathost Private IP
-#      debug:
-#        msg: "tomcathost Private IP is {{ tomcat_instance_info.instances[0].private_ip_address }}"
-#      when: tomcathost is defined
+    - name: Print tomcathost Private IP
+      debug:
+        msg: "tomcathost Private IP is {{ tomcat_instance_info.instances[0].private_ip_address }}"
 
     - name: Create EC2 only if not created memcache
       amazon.aws.ec2_instance_info:
