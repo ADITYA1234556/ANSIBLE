@@ -201,5 +201,5 @@
 
     - name: Create files with variables of ids
       copy:
-        content: "vpcid: {{vpcout.vpc.id}}\npubsub1id: {{pubsub1.subnet.id}}\npubsub2id: {{pubsub2.subnet.id}}\npubsub3id: {{pubsub3.subnet.id}}\npvtsub1id: {{pvtsub1.subnet.id}}\npvtsub2id: {{pvtsub2.subnet.id}}\npvtsub3id: {{pvtsub3.subnet.id}}\nigwid: {{vpcigw.gateway_id}}\nnatgwid: {{nat_gateway.nat_gateway_id}}\npubrtid: {{public_route_table.route_table.id}}\npvtrtid: {{private_route_table.route_table.id}}\n"
+        content: "region: {{region}}\nvpcid: {{vpcout.vpc.id}}\npubsub1id: {{pubsub1.subnet.id}}\npubsub2id: {{pubsub2.subnet.id}}\npubsub3id: {{pubsub3.subnet.id}}\npvtsub1id: {{pvtsub1.subnet.id}}\npvtsub2id: {{pvtsub2.subnet.id}}\npvtsub3id: {{pvtsub3.subnet.id}}\nigwid: {{vpcigw.gateway_id}}\nnatgwid: {{nat_gateway.nat_gateway_id}}\npubrtid: {{public_route_table.route_table.id}}\npvtrtid: {{private_route_table.route_table.id}}\n"
         dest: variables/output_ids
