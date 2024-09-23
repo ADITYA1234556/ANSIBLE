@@ -1,0 +1,39 @@
+---
+- name: Install memcache, start and enable SVC
+  hosts: mcserver
+  gather_facts: no
+  tasks:
+    - name: Install memcache
+      apt:
+        name: memcached
+        state: present
+        update_cache: yes
+        cache_valid_time: 86400
+      tags:
+        - package
+
+    - name: Start & Enable memcache
+      service:
+        name: memcached
+        state: started
+        enabled: yes
+      tags:
+        - svc
+
+    - name: Enable remote login to memcache
+      lineinfile:
+        path: /etc/memcached.conf
+        regexp: '^-l' #finds for lines starting with -l
+        line: '-l 0.0.0.0'
+        backup: yes
+      notify:
+        - memcache handlers
+      tags:
+        - conf
+
+  handlers:
+    - name: memcache handlers
+      service:
+        name: memcached
+        state: restarted
+
