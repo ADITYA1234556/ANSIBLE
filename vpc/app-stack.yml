@@ -114,10 +114,10 @@
           "tag:Name": "nginx"
       register: nginx_instance_info
 
-    - name: Print nginxhost Private IP
-      debug:
-        msg: "nginxhost Private IP is {{ nginx_instance_info.instances[0].private_ip_address }}"
-      when: nginxhost is defined
+#    - name: Print nginxhost Private IP
+#      debug:
+#        msg: "nginxhost Private IP is {{ nginx_instance_info.instances[0].private_ip_address }}"
+#      when: nginxhost is defined
 
     - name: Create EC2 only if not created tomcat
       amazon.aws.ec2_instance_info:
@@ -150,8 +150,7 @@
         filters:
           "tag:Name": "tomcat"
       register: tomcat_instance_info
-    - debug:
-        var: tomcat_instance_info
+
     - name: Print tomcathost Private IP
       debug:
         msg: "tomcathost Private IP is {{ tomcat_instance_info.instances[0].private_ip_address }}"
