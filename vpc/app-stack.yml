@@ -279,11 +279,11 @@
         var: mysql_instance_info
 
     - set_fact:
-        nginxip: {{ nginx_instance_info.instances[0].private_ip_address }}
-        tomcatip: {{ tomcat_instance_info.instances[0].private_ip_address }}
-        memcacheip: {{ memcache_instance_info.instances[0].private_ip_address }}
-        rabbitmqip: {{ rabbitmq_instance_info.instances[0].private_ip_address }}
-        mysqlip: {{ mysql_instance_info.instances[0].private_ip_address }}
+        nginxip: "{{ nginx_instance_info.instances[0].private_ip_address }}"
+        tomcatip: "{{ tomcat_instance_info.instances[0].private_ip_address }}"
+        memcacheip: "{{ memcache_instance_info.instances[0].private_ip_address }}"
+        rabbitmqip: "{{ rabbitmq_instance_info.instances[0].private_ip_address }}"
+        mysqlip: "{{ mysql_instance_info.instances[0].private_ip_address }}"
 
 #    - name: Print MySQL Private IP
 #      debug:
