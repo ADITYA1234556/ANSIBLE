@@ -237,7 +237,7 @@
         region: "{{region}}"
         state: "{{state}}"
         instance_ids:
-          - "{{ nginx_instance_info.instances[0].instance_id }}"
+          - "{{ nginxhost.instances[0].instance_id }}"
         purge_instance_ids: true #will remove any instances that are added to elb but not specified here in code
         security_group_ids: "{{loadbalancer.group_id}}"
         subnets:
