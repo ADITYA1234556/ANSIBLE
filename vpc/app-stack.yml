@@ -151,10 +151,14 @@
           "tag:Name": "tomcat"
       register: tomcat_instance_info
 
-    - name: Print tomcathost Private IP
+    - name: Debug tomcat_instance_info output
       debug:
-        msg: "tomcathost Private IP is {{ tomcat_instance_info.instances[0].private_ip_address }}"
-      when: tomcat_instance_info.instances | length > 0
+        var: tomcat_instance_info
+
+#    - name: Print tomcathost Private IP
+#      debug:
+#        msg: "tomcathost Private IP is {{ tomcat_instance_info.instances[0].private_ip_address }}"
+#      when: tomcat_instance_info.instances | length > 0
 
     - name: Create EC2 only if not created memcache
       amazon.aws.ec2_instance_info:
@@ -188,10 +192,14 @@
           "tag:Name": "memcache"
       register: memcache_instance_info
 
-    - name: Print memcachehost Private IP
+    - name: Debug memcache_instance_info output
       debug:
-        msg: "memcachehost Private IP is {{ memcache_instance_info.instances[0].private_ip_address }}"
-      when: memcachehost is defined
+        var: memcache_instance_info
+
+#    - name: Print memcachehost Private IP
+#      debug:
+#        msg: "memcachehost Private IP is {{ memcache_instance_info.instances[0].private_ip_address }}"
+#      when: memcachehost is defined
 
     - name: Create EC2 only if not created rabbitmq
       amazon.aws.ec2_instance_info:
@@ -225,10 +233,14 @@
           "tag:Name": "rabbitmq"
       register: rabbitmq_instance_info
 
-    - name: Print rabbitmq Private IP
+    - name: Debug rabbitmq_instance_info output
       debug:
-        msg: "MySQL Private IP is {{ rabbitmq_instance_info.instances[0].private_ip_address }}"
-      when: rabbitmq is defined
+        var: rabbitmq_instance_info
+
+#    - name: Print rabbitmq Private IP
+#      debug:
+#        msg: "MySQL Private IP is {{ rabbitmq_instance_info.instances[0].private_ip_address }}"
+#      when: rabbitmq is defined
 
     - name: Create EC2 only if not created mysql
       amazon.aws.ec2_instance_info:
@@ -262,10 +274,14 @@
           "tag:Name": "mysql"
       register: mysql_instance_info
 
-    - name: Print MySQL Private IP
+    - name: Debug mysql_instance_info output
       debug:
-        msg: "MySQL Private IP is {{ mysql_instance_info.instances[0].private_ip_address }}"
-      when: mysqlhost is defined
+        var: mysql_instance_info
+
+#    - name: Print MySQL Private IP
+#      debug:
+#        msg: "MySQL Private IP is {{ mysql_instance_info.instances[0].private_ip_address }}"
+#      when: mysqlhost is defined
 
     - name: Insert private IP address in a file stack/group_vars/hostip
       blockinfile:
