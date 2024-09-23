@@ -114,10 +114,10 @@
           "tag:Name": "nginx"
       register: nginx_instance_info
 
-    - name: Print nginxhost Private IP
-      debug:
-        msg: "nginxhost Private IP is {{ nginx_instance_info.instances[0].private_ip_address }}"
-      when: nginxhost is defined
+#    - name: Print nginxhost Private IP
+#      debug:
+#        msg: "nginxhost Private IP is {{ nginx_instance_info.instances[0].private_ip_address }}"
+#      when: nginxhost is defined
 
     - name: Create EC2 only if not created tomcat
       amazon.aws.ec2_instance_info:
@@ -155,10 +155,10 @@
       debug:
         var: tomcat_instance_info
 
-    - name: Print tomcathost Private IP
-      debug:
-        msg: "tomcat private ip is {{ tomcat_instance_info.instances[0].private_ip_address }} "
-      when: tomcat_instance_info.instances is defined
+#    - name: Print tomcathost Private IP
+#      debug:
+#        msg: "tomcat private ip is {{ tomcat_instance_info.instances[0].private_ip_address }} "
+#      when: tomcat_instance_info.instances is defined
 
     - name: Create EC2 only if not created memcache
       amazon.aws.ec2_instance_info:
@@ -277,6 +277,13 @@
     - name: Debug mysql_instance_info output
       debug:
         var: mysql_instance_info
+
+    - set_fact:
+        nginxip: {{ nginx_instance_info.instances[0].private_ip_address }}
+        tomcatip: {{ tomcat_instance_info.instances[0].private_ip_address }}
+        memcacheip: {{ memcache_instance_info.instances[0].private_ip_address }}
+        rabbitmqip: {{ rabbitmq_instance_info.instances[0].private_ip_address }}
+        mysqlip: {{ mysql_instance_info.instances[0].private_ip_address }}
 
 #    - name: Print MySQL Private IP
 #      debug:
