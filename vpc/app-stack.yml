@@ -107,9 +107,16 @@
       register: nginxhost
       when: checknginxhost.instances | length == 0
 
+    - name: Gather EC2 instance info for nginx
+      amazon.aws.ec2_instance_info:
+        region: "{{ region }}"
+        filters:
+          "tag:Name": "nginx"
+      register: nginx_instance_info
+
     - name: Print nginxhost Private IP
       debug:
-        msg: "nginxhost Private IP is {{ nginxhost.instances[0].private_ip_address }}"
+        msg: "nginxhost Private IP is {{ nginx_instance_info.instances[0].private_ip_address }}"
       when: nginxhost is defined
 
     - name: Create EC2 only if not created tomcat
@@ -137,9 +144,16 @@
       register: tomcathost
       when: checktomcathost.instances | length == 0
 
+    - name: Gather EC2 instance info for tomcat
+      amazon.aws.ec2_instance_info:
+        region: "{{ region }}"
+        filters:
+          "tag:Name": "tomcat"
+      register: tomcat_instance_info
+
     - name: Print tomcathost Private IP
       debug:
-        msg: "tomcathost Private IP is {{ tomcathost.instances[0].private_ip_address }}"
+        msg: "tomcathost Private IP is {{ tomcat_instance_info.instances[0].private_ip_address }}"
       when: tomcathost is defined
 
     - name: Create EC2 only if not created memcache
@@ -167,9 +181,16 @@
       register: memcachehost
       when: checkmemcachehost.instances | length == 0
 
+    - name: Gather EC2 instance info for memcache
+      amazon.aws.ec2_instance_info:
+        region: "{{ region }}"
+        filters:
+          "tag:Name": "memcache"
+      register: memcache_instance_info
+
     - name: Print memcachehost Private IP
       debug:
-        msg: "memcachehost Private IP is {{ memcachehost.instances[0].private_ip_address }}"
+        msg: "memcachehost Private IP is {{ memcache_instance_info.instances[0].private_ip_address }}"
       when: memcachehost is defined
 
     - name: Create EC2 only if not created rabbitmq
@@ -197,9 +218,16 @@
       register: rabbitmqhost
       when: checkrabbitmqhost.instances | length == 0
 
+    - name: Gather EC2 instance info for rabbitmq
+      amazon.aws.ec2_instance_info:
+        region: "{{ region }}"
+        filters:
+          "tag:Name": "rabbitmq"
+      register: rabbitmq_instance_info
+
     - name: Print rabbitmq Private IP
       debug:
-        msg: "MySQL Private IP is {{ rabbitmqhost.instances[0].private_ip_address }}"
+        msg: "MySQL Private IP is {{ rabbitmq_instance_info.instances[0].private_ip_address }}"
       when: rabbitmq is defined
 
     - name: Create EC2 only if not created mysql
@@ -227,9 +255,16 @@
       register: mysqlhost
       when: checkmysqlhost.instances | length == 0
 
+    - name: Gather EC2 instance info for MySQL
+      amazon.aws.ec2_instance_info:
+        region: "{{ region }}"
+        filters:
+          "tag:Name": "mysql"
+      register: mysql_instance_info
+
     - name: Print MySQL Private IP
       debug:
-        msg: "MySQL Private IP is {{ mysqlhost.instances[0].private_ip_address }}"
+        msg: "MySQL Private IP is {{ mysql_instance_info.instances[0].private_ip_address }}"
       when: mysqlhost is defined
 
 #    - debug:
