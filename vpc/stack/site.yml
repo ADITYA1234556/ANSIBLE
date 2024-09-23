@@ -1,0 +1,24 @@
+---
+- name: Build Aritifact ROOT.war & SQL file to be copied to files/ directory
+  import_playbook: build.yml
+
+- name: Set Hosts to IP mapping in /etc/hosts file of all the servers
+  import_playbook: set_host_ip_map.yml
+
+- name: setup dbserver
+  import_playbook: db.yml
+
+- name: Deploy SQL file on DBSERVER
+  import_playbook: dbdeploy.yml
+
+- name: setup memcached server
+  import_playbook: memcache.yml
+
+- name: setup rabbitmq server
+  import_playbook: rabbitmq.yml
+
+- name: setup tomcat app server
+  import_playbook: appserver.yml
+
+- name: setup nginx server
+  import_playbook: web.yml
