@@ -48,7 +48,7 @@
         var: loadbalancer
 
     - debug:
-        var: bastion-sg-id
+        var: bastionid
 
     - name: Create Security group for app stack
       amazon.aws.ec2_security_group:
@@ -61,7 +61,7 @@
           - proto: tcp
             from_port: 22
             to_port: 22
-            group_id: "{{bastion-sg-id}}"
+            group_id: "{{bastionid}}"
           - proto: tcp
             from_port: 80
             to_port: 80
