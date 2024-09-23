@@ -283,11 +283,11 @@
       blockinfile:
         path: stack/group_vars/hostip
         block: |
-          nginx_ip:  {{ nginxhost.instances[0].private_ip_address }}
-          tomca_ip: {{ tomcathost.instances[0].private_ip_address }}
-          memcache_ip: {{ memcachehost.instances[0].private_ip_address }}
-          rabbitmq_ip: {{ rabbitmqhost.instances[0].private_ip_address }}
-          mysql_ip: {{ mysqlhost.instances[0].private_ip_address }}
+          nginx_ip:  {{ nginx_instance_info.instances[0].private_ip_address }}
+          tomca_ip: {{ tomcat_instance_info.instances[0].private_ip_address }}
+          memcache_ip: {{ memcache_instance_info.instances[0].private_ip_address }}
+          rabbitmq_ip: {{ rabbitmq_instance_info.instances[0].private_ip_address }}
+          mysql_ip: {{ mysql_instance_info.instances[0].private_ip_address }}
 
     - name: Copy login key to stack directory
       copy:
