@@ -49,7 +49,7 @@
 
     - name: Create Security group for app stack
       amazon.aws.ec2_security_group:
-        name: ansible-loadbalancer-sg
+        name: ansible-tomcat-sg
         description: allow incoming traffic on port 22 from bastion host and port 80 from load balancer
         region: "{{region}}"
         vpc_id: "{{vpcid}}"
@@ -67,4 +67,16 @@
 
     - debug:
         var: appstacksg
+
+    - name: Update ansible-tomcat-sg
+      amazon.aws.ec2_security_group:
+        name: ansible-tomcat-sg
+        description: allow all internal traffic
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        purge_rules: false #will not recreate security group unless there are any security group rule changes
+        rules:
+          - proto: all
+            group_id: "{{appstacksg.group_id}}"
+
 
