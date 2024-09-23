@@ -223,11 +223,11 @@
       blockinfile:
         path: stack/group_vars/hostip
         block: |
-          nginx_ip:  {{ nginxhost.instances[0].private_ip_address }} 
-          tomca_ip: {{ tomcathost.instances[0].private_ip_address }}
-          memcache_ip: {{ memcachehost.instances[0].private_ip_address }}
-          rabbitmq_ip: {{ rabbitmqhost.instances[0].private_ip_address }}
-          mysql_ip: {{ mysqlhost.instances[0].private_ip_address }}
+          nginx_ip:  {{ nginxhost.tagged_instances[0].private_ip }} 
+          tomca_ip: {{ tomcathost.tagged_instances[0].private_ip }}
+          memcache_ip: {{ memcachehost.tagged_instances[0].private_ip }}
+          rabbitmq_ip: {{ rabbitmqhost.tagged_instances[0].private_ip }}
+          mysql_ip: {{ mysqlhost.tagged_instances[0].private_ip }}
 
     - name: Copy login key to stack directory
       copy:
@@ -242,7 +242,7 @@
         region: "{{region}}"
         state: "{{state}}"
         instance_ids:
-          - "{{nginxhost.instances[0].private_ip_address}}"
+          - "{{ nginxhost.tagged_instances[0].id }}"
         purge_instance_ids: true #will remove any instances that are added to elb but not specified here in code
         security_group_ids: "{{loadbalancer.group_id}}"
         subnets:
