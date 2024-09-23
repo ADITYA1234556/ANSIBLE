@@ -3,6 +3,8 @@
   hosts: database
   gather_facts: no
   tasks:
+    - name: Import VPC Variables
+      include_vars: group_vars/dbsrvgroup
     - name: Installing Mysql service and dependencies
       package:
         name: "{{item}}"
