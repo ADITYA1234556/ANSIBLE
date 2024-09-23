@@ -3,6 +3,8 @@
   hosts: database
   gather_facts: no
   tasks:
+    - name: Import VPC Variables
+      include_vars: group_vars/dbsrvgroup
     - name: Copy SQL file db_backup.sql to database server
       copy:
         src: files/db_backup.sql
