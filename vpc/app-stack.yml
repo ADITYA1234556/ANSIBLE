@@ -150,7 +150,8 @@
         filters:
           "tag:Name": "tomcat"
       register: tomcat_instance_info
-
+    - debug:
+        var: tomcat_instance_info
     - name: Print tomcathost Private IP
       debug:
         msg: "tomcathost Private IP is {{ tomcat_instance_info.instances[0].private_ip_address }}"
