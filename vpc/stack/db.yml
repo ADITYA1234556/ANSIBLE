@@ -1,0 +1,57 @@
+---
+- name: Setup Mysql with accounts DB and remote login
+  hosts: database
+  gather_facts: no
+  tasks:
+    - name: Installing Mysql service and dependencies
+      package:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+        cache_valid_time: 86400
+      loop:
+        - mysql-server
+        - mysql-client
+        - python-mysqldb
+        - python3-mysqldb
+        - libmysqlclient-dev
+      ignore_errors: yes
+      tags:
+        - package
+
+    - name: Start and enable MYSQL service
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+      tags:
+        - svc
+
+    - name: Creating MYSQL user
+      mysql_user:
+        name: "{{dbuser}}"
+        password: "{{dbpass}}"
+        priv: '*.*:ALL' #FULL PRIVILEDGE
+        host: '%' # % so that we can login from remote machine
+        state: present
+
+    - name: Creating accounts database using db_accounts.
+      mysql_db:
+        name: "{{dbname}}"
+        state: present
+
+    - name: Enable remote login to mysql svc
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf #search in this file
+        regexp: '^bind-address' #search for bind-address at ^ = at the begining of a line
+        line: 'bind-address = 0.0.0.0' #replace it with bind-address = 0.0.0.0
+        backup: yes
+      notify:
+        - mysql handler
+      tags:
+        - conf
+  handlers:
+    - name: mysql handler
+      service:
+        name: mysql
+        state: restarted
