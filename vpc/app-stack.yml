@@ -235,6 +235,47 @@
         dest: stack/ansible-stack.pem
         mode: 0400
 
+    - name: Insert/update inventory file stack/inventory
+      blockinfile:
+        path: stack/inventory
+        block: |
+          web01 ansible_host={{nginxhost.instances.network_interfaces.private_ip_address}}
+          app01 ansible_host={{tomcathost.instances.network_interfaces.private_ip_address}}
+          mc01 ansible_host={{memcachehost.instances.network_interfaces.private_ip_address}}
+          rmq01 ansible_host={{rabbitmqhost.instances.network_interfaces.private_ip_address}}
+          db01 ansible_host={{mysqlhost.instances.network_interfaces.private_ip_address}}
+          cntl ansible_host=127.0.0.1 ansible_connection=local
+          
+          [webservers]
+          web01
+          
+          [database]
+          db01
+          
+          [appservers]
+          app01
+          
+          [rabbitserver]
+          rmq01
+          
+          [memserver]
+          mc01
+          
+          [control]
+          cntl
+          
+          [stack_inst:children]
+          webservers
+          database
+          appservers
+          rabbitserver
+          memserver
+          
+          [stack_inst:vars]
+          ansible_user=ubuntu
+          ansible_ssh_private_key_file=ansible-key.pem
+          #ansible_python_interpreter=/usr/lib/python3
+
     - name: Create a loadbalancer
       local_action:
         module: ec2_elb_lb
