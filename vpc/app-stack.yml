@@ -155,10 +155,10 @@
       debug:
         var: tomcat_instance_info
 
-#    - name: Print tomcathost Private IP
-#      debug:
-#        msg: "tomcathost Private IP is {{ tomcat_instance_info.instances[0].private_ip_address }}"
-#      when: tomcat_instance_info.instances | length > 0
+    - name: Print tomcathost Private IP
+      debug:
+        msg: "tomcat private ip is {{ tomcat_instance_info.instances[0].private_ip_address }} "
+      when: tomcathost is defined
 
     - name: Create EC2 only if not created memcache
       amazon.aws.ec2_instance_info:
