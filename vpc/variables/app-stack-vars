@@ -6,5 +6,6 @@ mysql_ami: ami-07d20571c32ba6cdc
 allowed_connection: 0.0.0.0/0
 region: "eu-west-2"
 state: present
+bastionid: sg-0faf8830682439f5a
 ami_id: "ami-04edbbd619fbf2979"
 bastion-sg-id: sg-0faf8830682439f5a
