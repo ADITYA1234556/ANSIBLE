@@ -210,10 +210,6 @@
     - debug:
         var: mysqlhost
 
-    - name: Get MySQL private IP
-      debug:
-        msg: "MySQL Private IP is {{ mysqlhost.instances[0].private_ip_address }}"
-
     - debug:
         var: "{{item}}"
       loop:
