@@ -1,3 +1,4 @@
+region: eu-west-2
 vpcid: vpc-0e0b57d430299966a
 pubsub1id: subnet-06c9af1b34a854d37
 pubsub2id: subnet-02c1b79b281c4141c
