@@ -7,3 +7,4 @@ allowed_connection: 0.0.0.0/0
 region: "eu-west-2"
 state: present
 ami_id: "ami-04edbbd619fbf2979"
+bastion-sg-id: sg-0faf8830682439f5a
