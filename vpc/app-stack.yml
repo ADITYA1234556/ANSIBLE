@@ -214,11 +214,6 @@
         rabbitmqip: "{{ rabbitmqhost.instances[0].private_ip_address }}"
         mysqlip: "{{ mysqlhost.instances[0].private_ip_address }}"
 
-#    - name: Print MySQL Private IP
-#      debug:
-#        msg: "MySQL Private IP is {{ mysql_instance_info.instances[0].private_ip_address }}"
-#      when: mysqlhost is defined
-
     - name: Insert private IP address in a file stack/group_vars/hostip
       blockinfile:
         path: stack/group_vars/hostip
@@ -229,7 +224,7 @@
           rabbitmq_ip: {{ rabbitmqhost.instances[0].private_ip_address }}
           mysql_ip: {{ mysqlhost.instances[0].private_ip_address }}
           
-          - name: Copy login key to stack directory
+    - name: Copy login key to stack directory
       copy:
         src: ansible-key.pem
         dest: stack/ansible-stack.pem
