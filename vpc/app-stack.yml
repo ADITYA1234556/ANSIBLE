@@ -114,10 +114,10 @@
           "tag:Name": "nginx"
       register: nginx_instance_info
 
-#    - name: Print nginxhost Private IP
-#      debug:
-#        msg: "nginxhost Private IP is {{ nginx_instance_info.instances[0].private_ip_address }}"
-#      when: nginxhost is defined
+    - name: Print nginxhost Private IP
+      debug:
+        msg: "nginxhost Private IP is {{ nginx_instance_info.instances[0].private_ip_address }}"
+      when: nginxhost is defined
 
     - name: Create EC2 only if not created tomcat
       amazon.aws.ec2_instance_info:
@@ -266,18 +266,6 @@
       debug:
         msg: "MySQL Private IP is {{ mysql_instance_info.instances[0].private_ip_address }}"
       when: mysqlhost is defined
-
-#    - debug:
-#        var: mysqlhost
-
-#    - debug:
-#        var: "{{item}}"
-#      loop:
-#        - { { tomcathost.instances[ 0 ].private_ip_address } }
-#        - { { memcachehost.instances[ 0 ].private_ip_address } }
-#        - { { rabbitmqhost.instances[ 0 ].private_ip_address } }
-#        - { { mysqlhost.instances[ 0 ].private_ip_address } }
-#        - { { nginxhost.instances[ 0 ].private_ip_address } }
 
     - name: Insert private IP address in a file stack/group_vars/hostip
       blockinfile:
