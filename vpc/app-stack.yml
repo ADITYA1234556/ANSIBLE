@@ -213,21 +213,21 @@
     - debug:
         var: "{{item}}"
       loop:
-        - tomcathost.instance_ids[0]
-        - memcachehost.instance_ids[0]
-        - rabbitmqhost.instance_ids[0]
-        - mysqlhost.instance_ids[0]
-        - nginxhost.instance_ids[0]
+        - tomcathost.instances[0].private_ip_address
+        - memcachehost.instances[0].private_ip_address
+        - rabbitmqhost.instances[0].private_ip_address
+        - mysqlhost.instances[0].private_ip_address
+        - nginxhost.instances[0].private_ip_address
 
     - name: Insert private IP address in a file stack/group_vars/hostip
       blockinfile:
         path: stack/group_vars/hostip
         block: |
-          nginx_ip: {{nginxhost.instance_ids[0]}}
-          tomca_ip: {{tomcathost.instance_ids[0]}}
-          memcache_ip: {{memcachehost.instance_ids[0]}}
-          rabbitmq_ip: {{rabbitmqhost.instance_ids[0]}}
-          mysql_ip: {{mysqlhost.instance_ids[0]}}
+          nginx_ip: {{nginxhost.instances[0].private_ip_address}}
+          tomca_ip: {{tomcathost.instances[0].private_ip_address}}
+          memcache_ip: {{memcachehost.instances[0].private_ip_address}}
+          rabbitmq_ip: {{rabbitmqhost.instances[0].private_ip_address}}
+          mysql_ip: {{mysqlhost.instances[0].private_ip_address}}
 
     - name: Copy login key to stack directory
       copy:
@@ -242,7 +242,7 @@
         region: "{{region}}"
         state: "{{state}}"
         instance_ids:
-          - "{{nginxhost.instances[0].instance_id}}"
+          - "{{nginxhost.instances[0].private_ip_address}}"
         purge_instance_ids: true #will remove any instances that are added to elb but not specified here in code
         security_group_ids: "{{loadbalancer.group_id}}"
         subnets:
