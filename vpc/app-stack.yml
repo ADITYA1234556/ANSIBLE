@@ -209,3 +209,48 @@
 
     - debug:
         var: mysqlhost
+
+    - debug:
+        var: "{{item}}"
+      loop:
+        - tomcathost.instances.network_interfaces.private_ip_address
+        - memcachehost.instances.network_interfaces.private_ip_address
+        - rabbitmqhost.instances.network_interfaces.private_ip_address
+        - mysqlhost.instances.network_interfaces.private_ip_address
+        - nginxhost.instances.network_interfaces.private_ip_address
+
+    - name: Insert private IP address in a file stack/group_vars/hostip
+      blockinfile:
+        path: stack/group_vars/hostip
+        block: |
+          nginx_ip: {{nginxhost.instances.network_interfaces.private_ip_address}}
+          tomca_ip: {{tomcathost.instances.network_interfaces.private_ip_address}}
+          memcache_ip: {{memcachehost.instances.network_interfaces.private_ip_address}}
+          rabbitmq_ip: {{rabbitmqhost.instances.network_interfaces.private_ip_address}}
+          mysql_ip: {{mysqlhost.instances.network_interfaces.private_ip_address}}
+
+    - name: Copy login key to stack directory
+      copy:
+        src: ansible-key.pem
+        dest: stack/ansible-stack.pem
+        mode: 0400
+
+    - name: Create a loadbalancer
+      local_action:
+        module: ec2_elb_lb
+        name: "app-elb"
+        region: "{{region}}"
+        state: "{{state}}"
+        instance_ids:
+          - "{{nginxhost.instances.instance_id}}"
+        purge_instance_ids: true #will remove any instances that are added to elb but not specified here in code
+        security_group_ids: "{{loadbalancer.group_id}}"
+        subnets:
+          - "{{pubsub1id}}"
+          - "{{pubsub2id}}"
+          - "{{pubsub3id}}"
+        listeners:
+          - protocol: http
+            load_balancer_port: 80
+            instance_port: 80
+
