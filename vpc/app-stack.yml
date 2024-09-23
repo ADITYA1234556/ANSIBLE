@@ -91,7 +91,7 @@
       register: checknginxhost
 
     - name: Creating EC2 host for nginx
-      amazon.aws.ec2_instance:
+      ec2:
         name: "nginx"
         region: "{{region}}"
         instance_type: t2.micro
@@ -116,7 +116,7 @@
       register: checktomcathost
 
     - name: Creating EC2 host for tomcat
-      amazon.aws.ec2_instance:
+      ec2:
         name: "tomcat"
         region: "{{region}}"
         instance_type: t2.micro
@@ -141,7 +141,7 @@
       register: checkmemcachehost
 
     - name: Creating EC2 host for memcache
-      amazon.aws.ec2_instance:
+      ec2:
         name: "memcache"
         region: "{{region}}"
         instance_type: t2.micro
@@ -166,7 +166,7 @@
       register: checkrabbitmqhost
 
     - name: Creating EC2 host for rabbitmq
-      amazon.aws.ec2_instance:
+      ec2:
         name: "rabbitmq"
         region: "{{region}}"
         instance_type: t2.micro
@@ -191,7 +191,7 @@
       register: checkmysqlhost
 
     - name: Creating EC2 host for mysql
-      amazon.aws.ec2_instance:
+      ec2:
         name: "mysql"
         region: "{{region}}"
         instance_type: t2.micro
