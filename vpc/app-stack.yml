@@ -47,7 +47,7 @@
     - debug:
         var: loadbalancersg
 
-    - debuh:
+    - debug:
         var: bastion-sg-id
 
     - name: Create Security group for app stack
