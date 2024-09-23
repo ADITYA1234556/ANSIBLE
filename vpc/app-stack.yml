@@ -45,7 +45,7 @@
       register: loadbalancer
 
     - debug:
-        var: loadbalancersg
+        var: loadbalancer
 
     - debug:
         var: bastion-sg-id
@@ -65,7 +65,7 @@
           - proto: tcp
             from_port: 80
             to_port: 80
-            group_id: "{{loadbalancersg.group_id}}"
+            group_id: "{{loadbalancer.group_id}}"
       register: appstacksg
 
     - debug:
