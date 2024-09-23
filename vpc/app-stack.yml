@@ -213,21 +213,21 @@
     - debug:
         var: "{{item}}"
       loop:
-        - tomcathost.instances[0].architecture
-        - memcachehost.instances[0].architecture
-        - rabbitmqhost.instances[0].architecture
-        - mysqlhost.instances[0].architecture
-        - nginxhost.instances[0].architecture
+        - tomcathost.instance_ids[0]
+        - memcachehost.instance_ids[0]
+        - rabbitmqhost.instance_ids[0]
+        - mysqlhost.instance_ids[0]
+        - nginxhost.instance_ids[0]
 
     - name: Insert private IP address in a file stack/group_vars/hostip
       blockinfile:
         path: stack/group_vars/hostip
         block: |
-          nginx_ip: {{nginxhost.instances[0].architecture}}
-          tomca_ip: {{tomcathost.instances[0].architecture}}
-          memcache_ip: {{memcachehost.instances[0].architecture}}
-          rabbitmq_ip: {{rabbitmqhost.instances[0].architecture}}
-          mysql_ip: {{mysqlhost.instances[0].architecture}}
+          nginx_ip: {{nginxhost.instance_ids[0]}}
+          tomca_ip: {{tomcathost.instance_ids[0]}}
+          memcache_ip: {{memcachehost.instance_ids[0]}}
+          rabbitmq_ip: {{rabbitmqhost.instance_ids[0]}}
+          mysql_ip: {{mysqlhost.instance_ids[0]}}
 
     - name: Copy login key to stack directory
       copy:
