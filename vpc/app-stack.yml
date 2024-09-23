@@ -213,21 +213,21 @@
     - debug:
         var: "{{item}}"
       loop:
-        - tomcathost.instances.network_interfaces.private_ip_address
-        - memcachehost.instances.network_interfaces.private_ip_address
-        - rabbitmqhost.instances.network_interfaces.private_ip_address
-        - mysqlhost.instances.network_interfaces.private_ip_address
-        - nginxhost.instances.network_interfaces.private_ip_address
+        - tomcathost.instances.private_ip_address
+        - memcachehost.instances.private_ip_address
+        - rabbitmqhost.instances.private_ip_address
+        - mysqlhost.instances.private_ip_address
+        - nginxhost.instances.private_ip_address
 
     - name: Insert private IP address in a file stack/group_vars/hostip
       blockinfile:
         path: stack/group_vars/hostip
         block: |
-          nginx_ip: {{nginxhost.instances.network_interfaces.private_ip_address}}
-          tomca_ip: {{tomcathost.instances.network_interfaces.private_ip_address}}
-          memcache_ip: {{memcachehost.instances.network_interfaces.private_ip_address}}
-          rabbitmq_ip: {{rabbitmqhost.instances.network_interfaces.private_ip_address}}
-          mysql_ip: {{mysqlhost.instances.network_interfaces.private_ip_address}}
+          nginx_ip: {{nginxhost.instances.private_ip_address}}
+          tomca_ip: {{tomcathost.instances.private_ip_address}}
+          memcache_ip: {{memcachehost.instances.private_ip_address}}
+          rabbitmq_ip: {{rabbitmqhost.instances.private_ip_address}}
+          mysql_ip: {{mysqlhost.instances.private_ip_address}}
 
     - name: Copy login key to stack directory
       copy:
