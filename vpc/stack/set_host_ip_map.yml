@@ -1,0 +1,15 @@
+- name: Set Hosts to IP mapping in /etc/hosts file of all the servers
+  hosts: all
+  tasks:
+    - name: Import HOST IP address
+      include_vars: group_vars/hostip
+
+    - name: Update hosts file for all the hosts
+      blockinfile:
+        path: /etc/hosts
+        block: |
+          {{nginx_ip}} web01
+          {{tomca_ip}} app01
+          {{rabbitmq_ip}} rmq01
+          {{memcache_ip}} mc01
+          {{mysql_ip}} db01
