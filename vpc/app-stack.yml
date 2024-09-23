@@ -1,5 +1,5 @@
 ---
-- name: Setup app stack with RDS, MEMECACHE, RABBITMQ AS BACKEND AND TOMCAT AS WEBSERVER RUNNING BEHIND ELB
+- name: Setup app stack with RDS, MEMECACHE, RABBITMQ AS BACKEND,NGINX AS ELB AND TOMCAT AS WEBSERVER RUNNING BEHIND ELB
   hosts: localhost
   connection: local
   gather_facts: no
@@ -82,4 +82,130 @@
           - proto: all
             group_id: "{{appstacksg.group_id}}"
 
+    - name: Create EC2 only if not created nginx
+      amazon.aws.ec2_instance_info:
+        filters:
+          "tag:Name": nginx
+          instance-state-name: [ "running" ]
+        region: "{{region}}"
+      register: checknginxhost
 
+    - name: Creating EC2 host for nginx
+      amazon.aws.ec2_instance:
+        name: "nginx"
+        region: "{{region}}"
+        instance_type: t2.micro
+        vpc_subnet_id: "{{pvtsub1id}}"
+        key_name: ansible-key
+        image_id: "{{nginx_ami}}"
+        wait: true
+        wait_timeout: 300
+        security_group: "{{appstacksg.group_id}}"
+        tags:
+          Name: nginx
+        exact_count: 1
+      register: nginxhost
+      when: checknginxhost.instances | length == 0
+
+    - name: Create EC2 only if not created tomcat
+      amazon.aws.ec2_instance_info:
+        filters:
+          "tag:Name": tomcat
+          instance-state-name: [ "running" ]
+        region: "{{region}}"
+      register: checktomcathost
+
+    - name: Creating EC2 host for tomcat
+      amazon.aws.ec2_instance:
+        name: "tomcat"
+        region: "{{region}}"
+        instance_type: t2.micro
+        vpc_subnet_id: "{{pvtsub1id}}"
+        key_name: ansible-key
+        image_id: "{{tomcat_ami}}"
+        wait: true
+        wait_timeout: 300
+        security_group: "{{appstacksg.group_id}}"
+        tags:
+          Name: tomcat
+        exact_count: 1
+      register: tomcathost
+      when: checktomcathost.instances | length == 0
+
+    - name: Create EC2 only if not created memcache
+      amazon.aws.ec2_instance_info:
+        filters:
+          "tag:Name": memcache
+          instance-state-name: [ "running" ]
+        region: "{{region}}"
+      register: checkmemcachehost
+
+    - name: Creating EC2 host for memcache
+      amazon.aws.ec2_instance:
+        name: "memcache"
+        region: "{{region}}"
+        instance_type: t2.micro
+        vpc_subnet_id: "{{pvtsub1id}}"
+        key_name: ansible-key
+        image_id: "{{memcache_ami}}"
+        wait: true
+        wait_timeout: 300
+        security_group: "{{appstacksg.group_id}}"
+        tags:
+          Name: memcache
+        exact_count: 1
+      register: memcachehost
+      when: checkmemcachehost.instances | length == 0
+
+    - name: Create EC2 only if not created rabbitmq
+      amazon.aws.ec2_instance_info:
+        filters:
+          "tag:Name": rabbitmq
+          instance-state-name: [ "running" ]
+        region: "{{region}}"
+      register: checkrabbitmqhost
+
+    - name: Creating EC2 host for rabbitmq
+      amazon.aws.ec2_instance:
+        name: "rabbitmq"
+        region: "{{region}}"
+        instance_type: t2.micro
+        vpc_subnet_id: "{{pvtsub1id}}"
+        key_name: ansible-key
+        image_id: "{{rmq_ami}}"
+        wait: true
+        wait_timeout: 300
+        security_group: "{{appstacksg.group_id}}"
+        tags:
+          Name: rabbitmq
+        exact_count: 1
+      register: rabbitmqhost
+      when: checkrabbitmqhost.instances | length == 0
+
+    - name: Create EC2 only if not created mysql
+      amazon.aws.ec2_instance_info:
+        filters:
+          "tag:Name": mysql
+          instance-state-name: [ "running" ]
+        region: "{{region}}"
+      register: checkmysqlhost
+
+    - name: Creating EC2 host for mysql
+      amazon.aws.ec2_instance:
+        name: "mysql"
+        region: "{{region}}"
+        instance_type: t2.micro
+        vpc_subnet_id: "{{pvtsub1id}}"
+        key_name: ansible-key
+        image_id: "{{mysql_ami}}"
+        wait: true
+        wait_timeout: 300
+        security_group: "{{appstacksg.group_id}}"
+        tags:
+          Name: mysql
+        exact_count: 1
+      register: mysqlhost
+      when: checkmysqlhost.instances | length == 0
+
+    - debug:
+        var: mysqlhost
