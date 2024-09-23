@@ -3,3 +3,7 @@ tomcat_ami: ami-088a2350395501f7c
 memcache_ami: ami-088a2350395501f7c
 rmq_ami: ami-088a2350395501f7c
 mysql_ami: ami-088a2350395501f7c
+allowed_connection: 0.0.0.0/0
+region: "eu-west-2"
+state: present
+ami_id: "ami-04edbbd619fbf2979"

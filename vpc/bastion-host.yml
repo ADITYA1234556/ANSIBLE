@@ -82,3 +82,10 @@
         - secgroup
         - bastionhost
         - checkec2
+
+    - name: Copy contents of bastion host security group id and append it to variables file
+      blockinfile: #this module is for appending
+          path: variables/output_ids
+          backup: yes
+          block: |
+            bastion-sg-id: {{secgroup.group_id}}

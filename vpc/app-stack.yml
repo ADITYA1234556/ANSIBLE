@@ -1,12 +1,9 @@
 ---
-- name: Setup app stack
+- name: Setup app stack with RDS, MEMECACHE, RABBITMQ AS BACKEND AND TOMCAT AS WEBSERVER RUNNING BEHIND ELB
   hosts: localhost
   connection: local
   gather_facts: no
   tasks:
-    - name: Import VPC setup variables
-      include_vars: variables/vpc-setup-variables
-
     - name: Import VPC setup variables ids
       include_vars: variables/output_ids
 
@@ -29,3 +26,45 @@
         dest: "./ansible-key.pem"
         mode: 0600
       when: keypair.changed
+
+    - name: Create Security group for Load Balancer
+      amazon.aws.ec2_security_group:
+        name: ansible-loadbalancer-sg
+        description: allow incoming traffic on port 80 and 443 from anywhere
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: "{{allowed_connection}}"
+          - proto: tcp
+            from_port: 443
+            to_port: 443
+            cidr_ip: "{{allowed_connection}}"
+      register: loadbalancer
+
+    - debug:
+        var: loadbalancersg
+
+    - name: Create Security group for app stack
+      amazon.aws.ec2_security_group:
+        name: ansible-loadbalancer-sg
+        description: allow incoming traffic on port 22 from bastion host and port 80 from load balancer
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        purge_rules: false #will not recreate security group unless there are any security group rule changes
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            group_id: "{{bastion-sg-id}}"
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            group_id: "{{loadbalancersg.group_id}}"
+      register: appstacksg
+
+    - debug:
+        var: appstacksg
+
