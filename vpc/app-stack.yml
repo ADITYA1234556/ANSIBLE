@@ -47,6 +47,9 @@
     - debug:
         var: loadbalancersg
 
+    - debuh:
+        var: bastion-sg-id
+
     - name: Create Security group for app stack
       amazon.aws.ec2_security_group:
         name: ansible-tomcat-sg
