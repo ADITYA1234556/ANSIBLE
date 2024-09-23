@@ -1,8 +1,8 @@
-nginx_ami: ami-088a2350395501f7c
-tomcat_ami: ami-088a2350395501f7c
-memcache_ami: ami-088a2350395501f7c
-rmq_ami: ami-088a2350395501f7c
-mysql_ami: ami-088a2350395501f7c
+nginx_ami: ami-07d20571c32ba6cdc
+tomcat_ami: ami-07d20571c32ba6cdc
+memcache_ami: ami-07d20571c32ba6cdc
+rmq_ami: ami-07d20571c32ba6cdc
+mysql_ami: ami-07d20571c32ba6cdc
 allowed_connection: 0.0.0.0/0
 region: "eu-west-2"
 state: present
