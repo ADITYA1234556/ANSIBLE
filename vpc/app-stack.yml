@@ -213,11 +213,11 @@
     - debug:
         var: "{{item}}"
       loop:
-        - tomcathost.instances[0].private_ip_address
-        - memcachehost.instances[0].private_ip_address
-        - rabbitmqhost.instances[0].private_ip_address
-        - mysqlhost.instances[0].private_ip_address
-        - nginxhost.instances[0].private_ip_address
+        - { { tomcathost.instances[ 0 ].private_ip_address } }
+        - { { memcachehost.instances[ 0 ].private_ip_address } }
+        - { { rabbitmqhost.instances[ 0 ].private_ip_address } }
+        - { { mysqlhost.instances[ 0 ].private_ip_address } }
+        - { { nginxhost.instances[ 0 ].private_ip_address } }
 
     - name: Insert private IP address in a file stack/group_vars/hostip
       blockinfile:
