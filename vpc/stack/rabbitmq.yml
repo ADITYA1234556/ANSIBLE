@@ -92,7 +92,11 @@
 #        - Restart RMQ
 #      tags:
 #        - conf
-
+    - name: Set PATH for rabbitmqctl
+      lineinfile:
+        path: /etc/environment
+        line: 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/sbin"'
+        state: present
 
     - rabbitmq_user:
         user: test #rabbitmq_user module to add rabbit mq user and password
