@@ -3,85 +3,85 @@
   hosts: rmqserver
   gather_facts: no
   tasks:
-    - name: Remove existing Erlang and RabbitMQ packages
-      apt:
-        name: "{{ item }}"
-        state: absent
-      loop:
-        - rabbitmq-server
-        - erlang
-      ignore_errors: yes  # Ignore errors if packages aren't installed
-
-    - name: Remove old Erlang and RabbitMQ repositories
-      apt_repository:
-        repo: "{{ item }}"
-        state: absent
-      loop:
-        - "deb http://binaries.erlang-solutions.com/debian jammy main"
-        - "deb https://dl.bintray.com/rabbitmq/debian bionic main"
-      ignore_errors: yes  # Ignore errors if repositories aren't found
-
-    - name: Install prerequisites
-      apt:
-        name: apt-transport-https
-        state: present
-
-    - name: Install Erlang Solutions package
-      apt:
-        deb: https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
-      tags:
-        - package
-
-    - name: Add Erlang Solutions public key
-      apt_key:
-        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
-        state: present
-      tags:
-        - package
-
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-      tags:
-        - package
-
-    - name: Install Erlang
-      apt:
-        name: erlang
-        state: present
-      tags:
-        - package
-
-    - name: Add RabbitMQ signing key
-      apt_key:
-        url: https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
-        state: present
-      tags:
-        - package
-
-    - name: Add RabbitMQ official repository
-      apt_repository:
-        repo: 'deb https://dl.bintray.com/rabbitmq/debian bionic main'
-        state: present
-      tags:
-        - package
-
-    - name: Install RabbitMQ
-      apt:
-        name: rabbitmq-server
-        state: present
-        update_cache: yes
-      tags:
-        - package
-
-
-    - name: Start & Enable RMQ
-      service:
-        name: rabbitmq-server
-        state: started
-        enabled: yes
-      tags:
-        - svc
+#    - name: Remove existing Erlang and RabbitMQ packages
+#      apt:
+#        name: "{{ item }}"
+#        state: absent
+#      loop:
+#        - rabbitmq-server
+#        - erlang
+#      ignore_errors: yes  # Ignore errors if packages aren't installed
+#
+#    - name: Remove old Erlang and RabbitMQ repositories
+#      apt_repository:
+#        repo: "{{ item }}"
+#        state: absent
+#      loop:
+#        - "deb http://binaries.erlang-solutions.com/debian jammy main"
+#        - "deb https://dl.bintray.com/rabbitmq/debian bionic main"
+#      ignore_errors: yes  # Ignore errors if repositories aren't found
+#
+#    - name: Install prerequisites
+#      apt:
+#        name: apt-transport-https
+#        state: present
+#
+#    - name: Install Erlang Solutions package
+#      apt:
+#        deb: https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
+#      tags:
+#        - package
+#
+#    - name: Add Erlang Solutions public key
+#      apt_key:
+#        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+#        state: present
+#      tags:
+#        - package
+#
+#    - name: Update apt cache
+#      apt:
+#        update_cache: yes
+#      tags:
+#        - package
+#
+#    - name: Install Erlang
+#      apt:
+#        name: erlang
+#        state: present
+#      tags:
+#        - package
+#
+#    - name: Add RabbitMQ signing key
+#      apt_key:
+#        url: https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
+#        state: present
+#      tags:
+#        - package
+#
+#    - name: Add RabbitMQ official repository
+#      apt_repository:
+#        repo: 'deb https://dl.bintray.com/rabbitmq/debian bionic main'
+#        state: present
+#      tags:
+#        - package
+#
+#    - name: Install RabbitMQ
+#      apt:
+#        name: rabbitmq-server
+#        state: present
+#        update_cache: yes
+#      tags:
+#        - package
+#
+#
+#    - name: Start & Enable RMQ
+#      service:
+#        name: rabbitmq-server
+#        state: started
+#        enabled: yes
+#      tags:
+#        - svc
 
     - name: Config setup
       copy:
