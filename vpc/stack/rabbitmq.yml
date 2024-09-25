@@ -83,15 +83,15 @@
 #      tags:
 #        - svc
 
-    - name: Config setup
-      copy:
-        content: |
-          [{rabbit, [{loopback_users, []}]}].
-        dest: /etc/rabbitmq/rabbitmq.config
-      notify:
-        - Restart RMQ
-      tags:
-        - conf
+#    - name: Config setup
+#      copy:
+#        content: |
+#          [{rabbit, [{loopback_users, []}]}].
+#        dest: /etc/rabbitmq/rabbitmq.config
+#      notify:
+#        - Restart RMQ
+#      tags:
+#        - conf
 
 
     - rabbitmq_user:
