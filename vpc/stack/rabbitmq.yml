@@ -3,16 +3,18 @@
   hosts: rmqserver
   gather_facts: no
   tasks:
-    - name: Install Erlang Repository Package
-      apt:
-        deb: https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb #addint erlang repo
+    - name: Add Erlang Solutions public key
+      apt_key:
+        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+        state: present
       tags:
         - package
 
-    - name: Add an Erlang Solution public Key
-      apt_key:
-        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc #adding the key of erlang
+    - name: Add Erlang Solutions repository
+      apt_repository:
+        repo: deb https://packages.erlang-solutions.com/ubuntu bionic contrib
         state: present
+        update_cache: yes
       tags:
         - package
 
