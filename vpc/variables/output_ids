@@ -7,7 +7,7 @@ pvtsub1id: subnet-02ff4f811aa49ecd0
 pvtsub2id: subnet-0f320f89efbdd877a
 pvtsub3id: subnet-0fbef7ae1398115d3
 igwid: igw-0e832ef6898b1d175
-natgwid: nat-0cb2be264ab324a24
+natgwid: nat-0f547d621e108e27f
 pubrtid: rtb-02e2ddd34a16af2a7
 pvtrtid: rtb-0f8f72e678ad46cf1
 # BEGIN ANSIBLE MANAGED BLOCK
