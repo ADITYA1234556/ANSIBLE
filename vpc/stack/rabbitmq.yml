@@ -3,40 +3,50 @@
   hosts: rmqserver
   gather_facts: no
   tasks:
+    - name: Install prerequisites
+      apt:
+        name: apt-transport-https
+        state: present
+
     - name: Install Erlang Repository Package
       apt:
-        deb: https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+        deb: https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb  # Updated version
       tags:
         - package
 
-    - name: Add an Erlang Solution public Key
+    - name: Add Erlang Solutions public key
       apt_key:
         url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
         state: present
       tags:
         - package
 
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      tags:
+        - package
+
     - name: Install Erlang
       apt:
         name: erlang
-        update_cache: yes
-        cache_valid_time: 86400
         state: present
       tags:
         - package
 
-    - name: Add an Apt signing key, uses whichever key is at the URL
+    - name: Add RabbitMQ signing key
       apt_key:
         url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
         state: present
       tags:
         - package
 
-#    - apt_repository:
-#        repo: deb https://dl.bintray.com/rabbitmq/debian bionic main
-#        state: present
-#      tags:
-#        - package
+    - name: Add RabbitMQ official repository
+      apt_repository:
+        repo: 'deb https://dl.bintray.com/rabbitmq/debian bionic main'
+        state: present
+      tags:
+        - package
 
     - name: Install Rabbit MQ
       apt:
