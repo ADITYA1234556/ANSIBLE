@@ -32,9 +32,18 @@
       tags:
         - package
 
-    - apt_repository:
+    - name: Add RabbitMQ public key
+      apt_key:
+        url: 'https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey'
+        state: present
+      tags:
+        - package
+
+    - name: Add RabbitMQ official repository
+      apt_repository:
         repo: 'deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu bionic main'
         state: present
+        update_cache: yes
       tags:
         - package
 
